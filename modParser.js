@@ -1,6 +1,6 @@
-//TODO: implement samples, chances are i won't
+//TODO: implement samples, chances are I won't
 
-let modParser; //global variable that conatins the lirary
+let modParser; //global variable that contains the library
 
 //wrap everything in a scope
 {
@@ -18,11 +18,11 @@ let modParser; //global variable that conatins the lirary
   }
 
   let periods = {
-    856: "C1", 808: "C#1", 762: "D1", 720: "D#1", 678: "E1", 640: "F1", 
+    856: "C1", 808: "C#1", 762: "D1", 720: "D#1", 678: "E1", 640: "F1",
     604: "F#1", 570: "G1", 538: "G#1", 508: "A1", 480: "A#1", 453: "B1",
-    428: "C2", 404: "C#2", 381: "D2", 360: "D#2", 339: "E2", 320: "F2", 
+    428: "C2", 404: "C#2", 381: "D2", 360: "D#2", 339: "E2", 320: "F2",
     302: "F#2", 285: "G2", 269: "G#2", 254: "A2", 240: "A#2", 226: "B2",
-    214: "C3", 202: "C#3", 190: "D3", 180: "D#3", 170: "E3", 160: "F3", 
+    214: "C3", 202: "C#3", 190: "D3", 180: "D#3", 170: "E3", 160: "F3",
     151: "F#3", 143: "G3", 135: "G#3", 127: "A3", 120: "A#3", 113: "B3"
   }
 
@@ -119,7 +119,7 @@ let modParser; //global variable that conatins the lirary
             };
 
             let period = periods[((byte1 & 0x0F) << 8) | byte2];
-            mod.patterns[pattern][position][channel].period = period; 
+            mod.patterns[pattern][position][channel].period = period;
 
             //save last non zero position
             if (mod.patterns[pattern][position][channel].period) {
