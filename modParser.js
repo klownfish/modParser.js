@@ -148,12 +148,9 @@ let modParser; //global variable that contains the library
       }//end loop through patterns
 
       for (let i = 0; i < samplesLength; i++) {
-        console.log(i);
-        console.log(mod.samples[i].sampleLength);
-        let sample = mod.samples[i];
-        sample.data = [];
-        for (let j = 0; j < sample.sampleLength; j++) {
-          sample.data[i] = reader.readByteNum()
+        mod.samples[i].data = [];
+        for (let j = 0; j < mod.samples[i].sampleLength; j++) {
+          mod.samples[i].data[j] = reader.readByteNum() - 128;
         }
       }
 
