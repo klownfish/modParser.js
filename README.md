@@ -19,12 +19,22 @@ explanation on how to use all this.
 
 `patterns: []`  --  contains all patterns.
 
-`patternOrder: [num]`  --  the order to play the patterns in.
+`patternOrder: [Num]`  --  the order to play the patterns in.
 
 ### sample
-`length: num`  --  how many bytes the sample contains.
+`name: String`  --  name of the sample.
 
 `data: []`  --  data for the sample. 
+
+`sampleLength: Num`  --  length of the sample in bytes.
+
+`finetune: Num`  --  finetune pitch.
+
+`volume: Num`  --  volume between 0-64.
+
+`repeatStart: Num`  --  Where to start repeating in bytes.
+
+`repeatLength: Num`  --  How many times to repeat.
 
 ### pattern
 A pattern is a two dimensional array. Rows indicate position 

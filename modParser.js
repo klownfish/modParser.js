@@ -82,13 +82,13 @@ let modParser; //global variable that contains the library
       for (let i = 0; i < samplesLength; i++) {
         mod.samples[i] = {};
         mod.samples[i].name = reader.read(22).replace(/\u0000/g, '');
-        mod.samples[i].sampleLength = reader.readByteNum() << 8 +
-          reader.readByteNum();
-        mod.samples[i].nibble = reader.readByteNum();
+        mod.samples[i].sampleLength = (reader.readByteNum() << 8 |
+          reader.readByteNum()) * 2;
+        mod.samples[i].finetune = reader.readByteNum() & 0x0F;
         mod.samples[i].volume = reader.readByteNum();
-        mod.samples[i].repeatStart = reader.readByteNum() << 8 +
-          reader.readByteNum();
-        mod.samples[i].repeatLength = reader.readByteNum() << 8 +
+        mod.samples[i].repeatStart = (reader.readByteNum() << 8 |
+          reader.readByteNum()) * 2;
+        mod.samples[i].repeatLength = reader.readByteNum() << 8 |
           reader.readByteNum();
       }
 
@@ -146,6 +146,16 @@ let modParser; //global variable that contains the library
         //set length to last non zero position
         mod.patterns[pattern].length = lastPosition;
       }//end loop through patterns
+
+      for (let i = 0; i < samplesLength; i++) {
+        console.log(i);
+        console.log(mod.samples[i].sampleLength);
+        let sample = mod.samples[i];
+        sample.data = [];
+        for (let j = 0; j < sample.sampleLength; j++) {
+          sample.data[i] = reader.readByteNum()
+        }
+      }
 
       return mod;
     }
