@@ -7,9 +7,9 @@ Read [this](https://greg-kennedy.com/tracker/modformat.html) for a more in-depth
 explanation on how to use all this.
 
 ### methods
-`async parsefile(file)`  --  parses a mod-file and returns a mod-object.
+`async parseFile(file)`  --  parses a mod-file and returns a mod-object.
 
-`parse string(string)` --  parses a binary string and returns a mod-object.
+`parseString(string)` --  parses a binary string and returns a mod-object.
 
 
 ### mod-object
