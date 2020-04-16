@@ -1,4 +1,10 @@
-//TODO: implement samples
+/*********************************
+ * By Olof Helgesson
+ * 
+ * modParser.js 1.0 - 2019-4-16
+ * 
+ * licensed under LGPLv3
+*****************************************/
 
 let modParser; //global variable that contains the library
 
