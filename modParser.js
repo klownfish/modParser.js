@@ -1,7 +1,7 @@
 /*********************************
  * By Olof Helgesson
  * 
- * modParser.js 1.0 - 2019-4-16
+ * modParser.js 1.0 - 2020-4-16
  * 
  * licensed under LGPLv3
 *****************************************/
@@ -117,7 +117,7 @@ let modParser; //global variable that contains the library
       reader.read(4)
 
       //loop through patterns
-      for (let pattern = 0; pattern < getMax(mod.patternOrder); pattern++) {
+      for (let pattern = 0; pattern <= getMax(mod.patternOrder); pattern++) {
         mod.patterns[pattern] = []
         let lastPosition = 0;
 
@@ -153,6 +153,7 @@ let modParser; //global variable that contains the library
         mod.patterns[pattern].length = lastPosition;
       }//end loop through patterns
 
+      //read sample data
       for (let i = 0; i < samplesLength; i++) {
         mod.samples[i].data = [];
         for (let j = 0; j < mod.samples[i].sampleLength; j++) {
@@ -194,6 +195,8 @@ let modParser; //global variable that contains the library
     readByteNum() {
       let ret = this.string.charCodeAt(this.index);
       this.index++;
+      if (this.string.length - this.index < 2000)
+        console.log(this.string.length - this.index);
       return ret;
     }
 
