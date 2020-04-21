@@ -1,7 +1,9 @@
 /*********************************
  * By Olof Helgesson
  * 
- * modParser.js 1.0 - 2020-4-16
+ * modParser.js 1.0.1 - 2020-4-20
+ * 
+ * https://github.com/klownfish/modParser.js
  * 
  * licensed under LGPLv3
 *****************************************/
