@@ -6,8 +6,23 @@
  * licensed under LGPLv3
 *****************************************/
 
-let modParser; //global variable that contains the library
+let modParser = {}; //global variable that contains the library
+modParser.periods = { 0: "rest",
+  1712: "c0", 1616: "c#0", 1525: "d0", 1440: "d#0", 1357: "e0", 1281: "f0",
+  1209: "f#0", 1141: "g0", 1077: "g#0", 1017: "a0", 961: "a#0", 907: "b0",
 
+  856: "c1", 808: "c#1", 762: "d1", 720: "d#1", 678: "e1", 640: "f1",
+  604: "f#1", 570: "g1", 538: "g#1", 508: "a1", 480: "a#1", 453: "b1",
+
+  428: "c2", 404: "c#2", 381: "d2", 360: "d#2", 339: "e2", 320: "f2",
+  302: "f#2", 285: "g2", 269: "g#2", 254: "a2", 240: "a#2", 226: "b2",
+
+  214: "c3", 202: "c#3", 190: "d3", 180: "d#3", 170: "e3", 160: "f3",
+  151: "f#3", 143: "g3", 135: "g#3", 127: "a3", 120: "a#3", 113: "b3",
+
+  107: "c4", 101: "c#4", 95: "d4", 90: "d#4", 85: "e4", 80: "f4", 
+  76: "f#4", 71: "g3", 67: "g#3", 64: "a3", 60: "a#3", 57: "b3"
+}
 //wrap everything in a scope
 {
   //taken from https://www.quaxio.com/%C2%B5_mod_player_from_scratch/
@@ -21,19 +36,6 @@ let modParser; //global variable that contains the library
     "8CHN": 8,
     "OKTA": 8,
     "CD81": 8
-  }
-
-  let periods = {
-    1712: "C0", 1616: "C#0", 1525: "D0", 1440: "D#0", 1357: "E0", 1281: "F0",
-    1209: "F#0", 1141: "G0", 1077: "G#0", 1017: "A0", 961: "A#0", 907: "B0",
-    856: "C1", 808: "C#1", 762: "D1", 720: "D#1", 678: "E1", 640: "F1",
-    604: "F#1", 570: "G1", 538: "G#1", 508: "A1", 480: "A#1", 453: "B1",
-    428: "C2", 404: "C#2", 381: "D2", 360: "D#2", 339: "E2", 320: "F2",
-    302: "F#2", 285: "G2", 269: "G#2", 254: "A2", 240: "A#2", 226: "B2",
-    214: "C3", 202: "C#3", 190: "D3", 180: "D#3", 170: "E3", 160: "F3",
-    151: "F#3", 143: "G3", 135: "G#3", 127: "A3", 120: "A#3", 113: "B3",
-    107: "C4", 101: "C#4", 95: "D4", 90: "D#4", 85: "E4", 80: "F4", 
-    76: "F#4", 71: "G3", 67: "G#3", 64: "A3", 60: "A#3", 57: "B3"
   }
 
   function readFileWithPromise(file) {
@@ -98,7 +100,7 @@ let modParser; //global variable that contains the library
           reader.readByteNum();
       }
 
-      //amount of patterns to be played
+      //number of patterns to be played
       let songLength = reader.readByteNum();
 
       //useless byte, usually set to 127
@@ -140,11 +142,11 @@ let modParser; //global variable that contains the library
               sample: (byte1 & 0xF0) | ((byte3 & 0xF0) >> 4)
             };
 
-            let period = periods[((byte1 & 0x0F) << 8) | byte2];
+            let period = modParser.periods[((byte1 & 0x0F) << 8) | byte2];
             mod.patterns[pattern][position][channel].period = period;
 
             //save last non zero position
-            if (mod.patterns[pattern][position][channel].period) {
+            if (mod.patterns[pattern][position][channel].period !== "rest") {
               lastPosition = position + 1;
             }
           }
@@ -195,8 +197,6 @@ let modParser; //global variable that contains the library
     readByteNum() {
       let ret = this.string.charCodeAt(this.index);
       this.index++;
-      if (this.string.length - this.index < 2000)
-        console.log(this.string.length - this.index);
       return ret;
     }
 
