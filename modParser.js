@@ -9,7 +9,23 @@
 *****************************************/
 
 let modParser = {}; //global variable that contains the library
-modParser.periods = { 0: "rest",
+
+//wrap everything in a scope
+{
+  //taken from https://www.quaxio.com/%C2%B5_mod_player_from_scratch/
+  let MK_to_channels = {
+    "2CHN": 2,
+    "M.K.": 4,
+    "M!K!": 4,
+    "4CHN": 4,
+    "FLT4": 4,
+    "6CHN": 6,
+    "8CHN": 8,
+    "OKTA": 8,
+    "CD81": 8
+  }
+
+  let periods = { 0: "rest",
   1712: "c0", 1616: "c#0", 1525: "d0", 1440: "d#0", 1357: "e0", 1281: "f0",
   1209: "f#0", 1141: "g0", 1077: "g#0", 1017: "a0", 961: "a#0", 907: "b0",
 
@@ -25,20 +41,6 @@ modParser.periods = { 0: "rest",
   107: "c4", 101: "c#4", 95: "d4", 90: "d#4", 85: "e4", 80: "f4", 
   76: "f#4", 71: "g3", 67: "g#3", 64: "a3", 60: "a#3", 57: "b3"
 }
-//wrap everything in a scope
-{
-  //taken from https://www.quaxio.com/%C2%B5_mod_player_from_scratch/
-  let MK_to_channels = {
-    "2CHN": 2,
-    "M.K.": 4,
-    "M!K!": 4,
-    "4CHN": 4,
-    "FLT4": 4,
-    "6CHN": 6,
-    "8CHN": 8,
-    "OKTA": 8,
-    "CD81": 8
-  }
 
   function readFileWithPromise(file) {
     return new Promise( (resolve, reject) => {
@@ -144,7 +146,7 @@ modParser.periods = { 0: "rest",
               sample: (byte1 & 0xF0) | ((byte3 & 0xF0) >> 4)
             };
 
-            let period = modParser.periods[((byte1 & 0x0F) << 8) | byte2];
+            let period = periods[((byte1 & 0x0F) << 8) | byte2];
             mod.patterns[pattern][position][channel].period = period;
 
             //save last non zero position
